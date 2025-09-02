@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -7,13 +8,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-silver: #e4decf;
-  --color-timberwolf: #f6f5f0;
-  --color-alabaster: #e7e5dc;
-  --color-rosy: #c6a494ff;
   --color-redorange: #d87655;
-  --color-charcoal: #373737;
 
+  --font-poppins: "Poppins", serif;
   --font-karla: "Karla", serif;
   --font-caladea: "Caladea", serif;
 

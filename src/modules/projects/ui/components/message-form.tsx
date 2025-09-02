@@ -67,7 +67,7 @@ export const MessageForm = ({ projectId }: Props) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
-          "relative border p-4 pt-1 rounded-xl bg-charcoal dark:bg-sidebar transition-all",
+          "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
           isFocused && "shadow-xs",
           showUsage && "rounded-t-none"
         )}
@@ -83,7 +83,7 @@ export const MessageForm = ({ projectId }: Props) => {
               onBlur={() => setIsFocused(false)}
               minRows={1}
               maxRows={8}
-              className="pt-4 resize-none border-none w-full outline-none bg-transparent text-white"
+              className="pt-4 resize-none border-none w-full outline-none bg-transparent text-muted-foreground"
               placeholder="What would you like to build?"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
@@ -100,19 +100,21 @@ export const MessageForm = ({ projectId }: Props) => {
             <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 text-[10px] font-karla text-muted-foreground">
               <span>&#8984;</span>Enter
             </kbd>
-            <span className="text-white">&nbsp; to submit</span>
+            <span>&nbsp; to submit</span>
           </div>
           <Button
             disabled={isButtonDisabled}
             className={cn(
               "size-8 rounded-full",
-              isButtonDisabled ? "bg-muted-foreground" : "bg-redorange"
+              isButtonDisabled
+                ? "bg-redorange text-white"
+                : "bg-redorange text-white"
             )}
           >
             {isPending ? (
               <Loader className="size-4 animate-spin" />
             ) : (
-              <ChevronUpIcon className="size-4" />
+              <ChevronUpIcon className="size-4 " />
             )}
           </Button>
         </div>
