@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextAreaAutosize from "react-textarea-autosize";
@@ -10,10 +12,7 @@ import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-
-interface Props {
-  projectId: string;
-}
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   value: z
@@ -22,9 +21,9 @@ const formSchema = z.object({
     .max(10000, { message: "Message is too long" }),
 });
 
-export const MessageForm = ({ projectId }: Props) => {
+export const ProjectForm = () => {
+  const router = useRouter();
   const [isFocused, setIsFocused] = useState(false);
-  const showUsage = false;
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
@@ -36,13 +35,11 @@ export const MessageForm = ({ projectId }: Props) => {
     },
   });
 
-  const createMessage = useMutation(
-    trpc.messages.create.mutationOptions({
-      onSuccess: () => {
-        form.reset();
-        queryClient.invalidateQueries(
-          trpc.messages.getMany.queryOptions({ projectId })
-        );
+  const createProject = useMutation(
+    trpc.projects.create.mutationOptions({
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(trpc.projects.getMany.queryOptions());
+        router.push(`/projects/${data.id}`);
         // TODO: invalidate usage status
       },
       onError: (error) => {
@@ -53,13 +50,12 @@ export const MessageForm = ({ projectId }: Props) => {
   );
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await createMessage.mutateAsync({
+    await createProject.mutateAsync({
       value: values.value,
-      projectId,
     });
   };
 
-  const isPending = createMessage.isPending;
+  const isPending = createProject.isPending;
   const isButtonDisabled = isPending || !form.formState.isValid;
 
   return (
@@ -68,8 +64,7 @@ export const MessageForm = ({ projectId }: Props) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
           "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
-          isFocused && "shadow-xs",
-          showUsage && "rounded-t-none"
+          isFocused && "shadow-xs"
         )}
       >
         <FormField

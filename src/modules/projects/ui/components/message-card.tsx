@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Fragment, MessageRole, MessageType } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { ChevronDownIcon, Terminal } from "lucide-react";
+import { ChevronDownIcon, Puzzle } from "lucide-react";
 import Image from "next/image";
 
 interface UserMessageProps {
@@ -38,7 +38,7 @@ const FragmentCard = ({
       )}
       onClick={() => onFragmentClick(fragment)}
     >
-      <Terminal className="size-4 mt-0.5" />
+      <Puzzle className="size-4 mt-0.5" />
       <div className="flex flex-col flex-1">
         <span className="text-sm line-clamp-1">{fragment.title}</span>
         <span className="test-sm">Preview</span>
