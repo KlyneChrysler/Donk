@@ -58,7 +58,7 @@ export function FragmentWeb({ data }: Props) {
               window.open(data.sandboxUrl, "_blank");
             }}
           >
-            <AppWindowMac />
+            <AppWindowMac className="size-5 text-muted-foreground" />
           </Button>
         </Hint>
       </div>

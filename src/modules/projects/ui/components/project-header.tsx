@@ -15,10 +15,10 @@ import {
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
-  ChevronDownIcon,
   ChevronLeftIcon,
-  ChevronUpIcon,
   Eclipse,
+  PanelBottomDashed,
+  PanelTopDashed,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -46,25 +46,30 @@ export const ProjectHeader = ({ projectId }: Props) => {
           <Button
             variant={"ghost"}
             size={"sm"}
-            className="focus-visible:ring-0 hover:bg-transparent hover:opacity-75 transition-opacity pl-2!"
+            className="focus-visible:ring-0 hover:bg-transparent hover:opacity-75 transition-opacity pl-2! flex-1 justify-between items-center gap-2"
           >
-            <Image src="/logo.svg" alt="donk" width={18} height={18} />
+            <Image src="/logo.svg" alt="donk" width={32} height={32} />
+
             <span className="text-sm font-medium">{project.name}</span>
-            {active ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            {active ? (
+              <PanelBottomDashed className="size-5 text-muted-foreground" />
+            ) : (
+              <PanelTopDashed className="size-5 text-muted-foreground" />
+            )}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="bottom" align="start">
+        <DropdownMenuContent side="bottom" align="end">
           <DropdownMenuItem asChild>
             <Link href="/">
               <ChevronLeftIcon />
-              <span>Go to dashboard</span>
+              <span>Home</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="gap-2">
               <Eclipse className="size-4 text-muted-foreground" />
-              <span>Themes</span>
+              <span>Theme</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
