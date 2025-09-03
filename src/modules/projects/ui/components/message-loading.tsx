@@ -5,11 +5,8 @@ const ShimmerMessages = () => {
   const messages = [
     "Thinking...",
     "Loading...",
-    "Generating...",
-    "Analyzing your request...",
-    "Building your website...",
-    "Crafting components...",
-    "Optimizing layout...",
+    "Generating Artifact...",
+    "Optimizing...",
     "Adding final touches...",
     "Almost ready...",
   ];

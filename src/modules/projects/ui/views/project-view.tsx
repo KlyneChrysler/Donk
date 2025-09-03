@@ -10,10 +10,10 @@ import { Suspense, useState } from "react";
 import {
   CodeIcon,
   CodeXml,
-  DollarSignIcon,
   EyeClosed,
   EyeIcon,
   Loader,
+  Sparkles,
 } from "lucide-react";
 import { Fragment } from "@/generated/prisma";
 import { ProjectHeader } from "../components/project-header";
@@ -91,7 +91,7 @@ export const ProjectView = ({ projectId }: Props) => {
                     className="bg-primary hover:scale-110"
                   >
                     <Link href="/pricing">
-                      <DollarSignIcon />
+                      <Sparkles />
                     </Link>
                   </Button>
                 </Hint>

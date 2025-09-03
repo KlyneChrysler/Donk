@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Fragment, MessageRole, MessageType } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { ChevronDownIcon, Puzzle } from "lucide-react";
+import { Regex } from "lucide-react";
 import Image from "next/image";
 
 interface UserMessageProps {
@@ -38,13 +38,14 @@ const FragmentCard = ({
       )}
       onClick={() => onFragmentClick(fragment)}
     >
-      <Puzzle className="size-4 mt-0.5" />
       <div className="flex flex-col flex-1">
-        <span className="text-sm line-clamp-1">{fragment.title}</span>
-        <span className="test-sm">Preview</span>
+        <span className="text-md line-clamp-1">Artifact</span>
       </div>
       <div className="flex items-center justify-center mt-0.5">
-        <ChevronDownIcon className="size-4" />
+        <Regex
+          className="size-12 animate-pulse text-muted-foreground overflow-hidden"
+          strokeWidth={1.25}
+        />
       </div>
     </button>
   );
@@ -82,7 +83,7 @@ const AssistantMessage = ({
           height={18}
           className="shrink-0"
         />
-        <span className="text-sm">Donk</span>
+        <span className="text-sm font-bold">Donk</span>
         <span className="text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
           {format(createdAt, "HH:mm 'on' MMM dd, yyyy")}
         </span>
