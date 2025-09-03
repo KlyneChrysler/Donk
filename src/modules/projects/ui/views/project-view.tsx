@@ -7,7 +7,14 @@ import {
 } from "@/components/ui/resizable";
 import { MessagesContainer } from "../components/messages-container";
 import { Suspense, useState } from "react";
-import { CodeIcon, EyeIcon, Flower2, Loader } from "lucide-react";
+import {
+  CodeIcon,
+  CodeXml,
+  DollarSignIcon,
+  EyeClosed,
+  EyeIcon,
+  Loader,
+} from "lucide-react";
 import { Fragment } from "@/generated/prisma";
 import { ProjectHeader } from "../components/project-header";
 import { FragmentWeb } from "../components/fragment-web";
@@ -44,7 +51,10 @@ export const ProjectView = ({ projectId }: Props) => {
             />
           </Suspense>
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle
+          withHandle
+          className="hover:bg-primary transition-colors"
+        />
         <ResizablePanel defaultSize={65} minSize={50}>
           <Tabs
             className="h-full gap-y-0"
@@ -55,11 +65,19 @@ export const ProjectView = ({ projectId }: Props) => {
             <div className="w-full flex items-center p-2 border-b gap-x-2">
               <TabsList className="h-8 p-0 border rounded-md">
                 <TabsTrigger value="preview" className="rounded-md">
-                  <EyeIcon className="size-4" />
+                  {tabState === "preview" ? (
+                    <EyeIcon className="size-4" />
+                  ) : (
+                    <EyeClosed className="size-4" />
+                  )}
                   {/* <span>Demo</span> */}
                 </TabsTrigger>
                 <TabsTrigger value="code" className="rounded-md">
-                  <CodeIcon className="size-4" />
+                  {tabState === "code" ? (
+                    <CodeXml className="size-4" />
+                  ) : (
+                    <CodeIcon className="size-4" />
+                  )}
                   {/* <span>Code</span> */}
                 </TabsTrigger>
               </TabsList>
@@ -70,10 +88,10 @@ export const ProjectView = ({ projectId }: Props) => {
                     asChild
                     size={"sm"}
                     variant={"default"}
-                    className="bg-redorange hover:scale-110"
+                    className="bg-primary hover:scale-110"
                   >
                     <Link href="/pricing">
-                      <Flower2 />
+                      <DollarSignIcon />
                     </Link>
                   </Button>
                 </Hint>

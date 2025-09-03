@@ -1,7 +1,7 @@
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import { Fragment } from "@/generated/prisma";
-import { ExternalLinkIcon, RefreshCcwIcon } from "lucide-react";
+import { AppWindowMac, CircleDashed, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
@@ -11,9 +11,12 @@ interface Props {
 export function FragmentWeb({ data }: Props) {
   const [fragmentKey, setFragmentKey] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [active, setActive] = useState(false);
 
   const onRefresh = () => {
     setFragmentKey((prev) => prev + 1);
+    setActive(true);
+    setTimeout(() => setActive(false), 2000);
   };
 
   const handleCopy = () => {
@@ -27,7 +30,11 @@ export function FragmentWeb({ data }: Props) {
       <div className="p-2 border-b bg-sidebar flex items-center gap-x-2">
         <Hint text="Refresh" side="bottom" align="start">
           <Button size="sm" variant={"outline"} onClick={onRefresh}>
-            <RefreshCcwIcon />
+            {active ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              <CircleDashed />
+            )}
           </Button>
         </Hint>
         <Hint text="Click to copy" side="bottom">
@@ -51,7 +58,7 @@ export function FragmentWeb({ data }: Props) {
               window.open(data.sandboxUrl, "_blank");
             }}
           >
-            <ExternalLinkIcon />
+            <AppWindowMac />
           </Button>
         </Hint>
       </div>

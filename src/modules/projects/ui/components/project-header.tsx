@@ -14,16 +14,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronDownIcon, ChevronLeftIcon, SunMoonIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronUpIcon,
+  Eclipse,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Props {
   projectId: string;
 }
 
 export const ProjectHeader = ({ projectId }: Props) => {
+  const [active, setActive] = useState(false);
+
   const trpc = useTRPC();
   const { data: project } = useSuspenseQuery(
     trpc.projects.getOne.queryOptions({ id: projectId })
@@ -33,7 +41,7 @@ export const ProjectHeader = ({ projectId }: Props) => {
 
   return (
     <header className="p-2 flex justify-between items-center border-b">
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={setActive}>
         <DropdownMenuTrigger asChild>
           <Button
             variant={"ghost"}
@@ -42,7 +50,7 @@ export const ProjectHeader = ({ projectId }: Props) => {
           >
             <Image src="/logo.svg" alt="donk" width={18} height={18} />
             <span className="text-sm font-medium">{project.name}</span>
-            <ChevronDownIcon />
+            {active ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="bottom" align="start">
@@ -55,7 +63,7 @@ export const ProjectHeader = ({ projectId }: Props) => {
           <DropdownMenuSeparator />
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="gap-2">
-              <SunMoonIcon className="size-4 text-muted-foreground" />
+              <Eclipse className="size-4 text-muted-foreground" />
               <span>Themes</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
