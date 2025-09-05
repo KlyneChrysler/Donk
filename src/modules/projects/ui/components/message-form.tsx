@@ -67,7 +67,7 @@ export const MessageForm = ({ projectId }: Props) => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
-          "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
+          "relative border p-4 pt-1 rounded-3xl bg-sidebar dark:bg-sidebar transition-all",
           isFocused && "shadow-xs",
           showUsage && "rounded-t-none"
         )}
@@ -84,7 +84,7 @@ export const MessageForm = ({ projectId }: Props) => {
               minRows={1}
               maxRows={8}
               className="pt-4 resize-none border-none w-full outline-none bg-transparent text-muted-foreground"
-              placeholder="What would you like to build?"
+              placeholder="Got a project in mind?"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
                   e.preventDefault();

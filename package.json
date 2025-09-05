@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.23.0",
+    "@clerk/themes": "^2.2.51",
     "@e2b/code-interpreter": "^1.5.1",
     "@hookform/resolvers": "^5.2.1",
     "@inngest/agent-kit": "^0.8.3",
@@ -50,6 +52,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "greeting-functions": "^2.0.2",
     "inngest": "^3.40.1",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.542.0",

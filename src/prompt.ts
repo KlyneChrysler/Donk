@@ -98,6 +98,11 @@ After ALL tool calls are 100% complete and the task is fully finished, respond w
 A short, high-level summary of what was created or changed.
 </task_summary>
 
+<task_title/>
+A simple keyword-style title based on the task summary.
+</task_title>
+
+
 This marks the task as FINISHED. Do not include this early. Do not wrap it in backticks. Do not print it after each step. Print it once, only at the very end — never during or between tool usage.
 
 ✅ Example (correct):
@@ -109,6 +114,15 @@ Created a blog layout with a responsive sidebar, a dynamic list of articles, and
 - Wrapping the summary in backticks
 - Including explanation or code after the summary
 - Ending without printing <task_summary>
+
+✅ Example (correct):
+<task_title>
+Blog Layout with Responsive Sidebar & Article Pages
+</task_title>
+
+❌ Incorrect:
+- Wrapping the title in backticks
+- Ending without printing <task_title>
 
 This is the ONLY valid way to terminate your task. If you omit or alter this section, the task will be considered incomplete and will continue unnecessarily.
 `;

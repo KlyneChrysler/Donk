@@ -13,6 +13,7 @@ import { PROMPT } from "@/prompt";
 import { prisma } from "@/lib/db";
 
 interface AgentState {
+  title: string;
   summary: string;
   files: { [path: string]: string };
 }
@@ -124,15 +125,27 @@ export const codeAgentFunction = inngest.createFunction(
       ],
       lifecycle: {
         onResponse: async ({ result, network }) => {
-          const lastAssistantMessageText =
-            lastAssistantTextMessageContent(result);
+          const text = lastAssistantTextMessageContent(result);
 
-          if (lastAssistantMessageText && network) {
-            if (lastAssistantMessageText.includes("<task_summary>")) {
-              network.state.data.summary = lastAssistantMessageText;
+          if (text && network) {
+            const summaryMatch = text.match(
+              /<task_summary>([\s\S]*?)<\/task_summary>/
+            );
+            if (summaryMatch && summaryMatch[1]) {
+              network.state.data.summary = summaryMatch[1].trim();
+            } else {
+              network.state.data.summary = "No summary provided.";
+            }
+
+            const titleMatch = text.match(
+              /<task_title>([\s\S]*?)<\/task_title>/
+            );
+            if (titleMatch && titleMatch[1]) {
+              network.state.data.title = titleMatch[1].trim();
+            } else {
+              network.state.data.title = "Untitled";
             }
           }
-
           return result;
         },
       },
@@ -187,7 +200,7 @@ export const codeAgentFunction = inngest.createFunction(
           fragment: {
             create: {
               sandboxUrl: sandboxUrl,
-              title: "Fragment",
+              title: result.state.data.title,
               files: result.state.data.files,
             },
           },
@@ -197,7 +210,7 @@ export const codeAgentFunction = inngest.createFunction(
 
     return {
       url: sandboxUrl,
-      title: "Fragment",
+      title: result.state.data.title,
       files: result.state.data.files,
       summary: result.state.data.summary,
     };

@@ -1,33 +1,33 @@
+"use client";
+
 import { ProjectForm } from "@/modules/home/ui/components/project-form";
-import { ProjectsList } from "@/modules/home/ui/components/projects-list";
-import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
+import { greet } from "greeting-functions";
 
 const Page = () => {
-  return (
-    <div className="flex flex-col max-w-5xl mx-auto w-full">
-      <section className="space-y-6 py-[16vh] 2xl:py-48">
-        <div className="flex flex-col items-center">
-          <Image
-            src="/logo.svg"
-            alt="donk"
-            width={50}
-            height={50}
-            className="hidden md:block"
-          />
-        </div>
+  const { user } = useUser();
 
-        <h1 className="text-2xl md:text-5xl font-bold text-center">
-          Building something with Donk
+  function getCurrentHour(): number {
+    return new Date().getHours();
+  }
+
+  return (
+    <div className="flex flex-col max-w-5xl mx-auto w-full my-auto">
+      <section className="space-y-6 py-[16vh] 2xl:py-48">
+        <h1 className="font-caladea text-3xl md:text-9xl text-center">
+          <p className="font-caladea text-4xl md:text-6xl mb-12">
+            {greet(user?.lastName || user?.firstName || "Donkies", {
+              style: "casual",
+              hour: getCurrentHour(),
+              timeBased: true,
+            })}
+          </p>
         </h1>
 
-        <p className="text-lg md:text-xl text-muted-foreground text-center">
-          Create something with Donk
-        </p>
         <div className="max-w-3xl mx-auto w-full">
           <ProjectForm />
         </div>
       </section>
-      <ProjectsList />
     </div>
   );
 };
