@@ -50,7 +50,11 @@ export const ProjectHeader = ({ projectId }: Props) => {
           >
             <Image src="/logo.svg" alt="donk" width={32} height={32} />
 
-            <span className="text-sm font-medium">{project.name}</span>
+            <span className="text-sm font-medium">
+              {project.name
+                .replace(/-/g, " ")
+                .replace(/\b\w/g, (char) => char.toUpperCase())}
+            </span>
             {active ? (
               <PanelBottomDashed className="size-5 text-muted-foreground" />
             ) : (

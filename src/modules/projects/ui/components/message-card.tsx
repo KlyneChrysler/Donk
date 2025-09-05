@@ -1,7 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Fragment, MessageRole, MessageType } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { UserButton } from "@clerk/nextjs";
+import { formatDistanceToNowStrict } from "date-fns";
 import { Regex } from "lucide-react";
 import Image from "next/image";
 
@@ -10,8 +11,17 @@ interface UserMessageProps {
 }
 const UserMessage = ({ content }: UserMessageProps) => {
   return (
-    <div className="flex justify-end pb-4 pr-2 pl-10">
-      <Card className="rounded-lg bg-muted p-3 shadow-none border-none max-w-[80%] break-words">
+    <div className="flex justify-start pb-4 pr-2 pl-10">
+      <Card className="rounded-lg bg-muted p-3 shadow-none border-none max-w-[80%] break-words flex flex-row justify-between items-center">
+        <UserButton
+          appearance={{
+            elements: {
+              userButtonBox: "rounded-full!",
+              userButtonAvatarBox: "rounded-full! size-7!",
+              userButtonTrigger: "rounded-full!",
+            },
+          }}
+        />
         {content}
       </Card>
     </div>
@@ -38,14 +48,23 @@ const FragmentCard = ({
       )}
       onClick={() => onFragmentClick(fragment)}
     >
-      <div className="flex flex-col flex-1">
-        <span className="text-md line-clamp-1">Artifact</span>
-      </div>
-      <div className="flex items-center justify-center mt-0.5">
-        <Regex
-          className="size-12 animate-pulse text-muted-foreground overflow-hidden"
-          strokeWidth={1.25}
-        />
+      <div className="flex justify-between items-center group">
+        <div className="flex flex-col flex-1">
+          <span className="text-md line-clamp-3">{fragment.title}</span>
+        </div>
+        <div className="flex items-center justify-center mt-0.5">
+          {isActiveFragment ? (
+            <Regex
+              className="size-12 animate-pulse overflow-hidden group-hover:scale-125 transition-transform duration-200 ease-in-out"
+              strokeWidth={1.25}
+            />
+          ) : (
+            <Regex
+              className="size-12 text-muted-foreground overflow-hidden"
+              strokeWidth={1.25}
+            />
+          )}
+        </div>
       </div>
     </button>
   );
@@ -83,9 +102,11 @@ const AssistantMessage = ({
           height={18}
           className="shrink-0"
         />
-        <span className="text-sm font-bold">Donk</span>
+        <span className="text-md font-poppins">Donk</span>
         <span className="text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
-          {format(createdAt, "HH:mm 'on' MMM dd, yyyy")}
+          {"About "}
+          {formatDistanceToNowStrict(new Date(createdAt))}
+          {" ago"}
         </span>
       </div>
       <div className="pl-8.5 flex flex-col gap-y-4">

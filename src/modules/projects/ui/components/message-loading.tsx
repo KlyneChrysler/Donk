@@ -2,14 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const ShimmerMessages = () => {
-  const messages = [
-    "Thinking...",
-    "Loading...",
-    "Generating Artifact...",
-    "Optimizing...",
-    "Adding final touches...",
-    "Almost ready...",
-  ];
+  const messages = ["Interactive Artifact"];
 
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 

@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FileExplorer } from "@/components/file-explorer";
 import { Hint } from "@/components/hint";
+import { UserControl } from "@/components/user-control";
 
 interface Props {
   projectId: string;
@@ -51,11 +52,8 @@ export const ProjectView = ({ projectId }: Props) => {
             />
           </Suspense>
         </ResizablePanel>
-        <ResizableHandle
-          withHandle
-          className="hover:bg-primary transition-colors"
-        />
-        <ResizablePanel defaultSize={65} minSize={50}>
+        <ResizableHandle className="hover:bg-primary transition-colors z-50" />
+        <ResizablePanel defaultSize={65} minSize={0.5}>
           <Tabs
             className="h-full gap-y-0"
             defaultValue="preview"
@@ -91,10 +89,11 @@ export const ProjectView = ({ projectId }: Props) => {
                     className="bg-primary hover:scale-110"
                   >
                     <Link href="/pricing">
-                      <Sparkles />
+                      <Sparkles strokeWidth={1.5} />
                     </Link>
                   </Button>
                 </Hint>
+                <UserControl />
               </div>
             </div>
             <TabsContent value="preview">

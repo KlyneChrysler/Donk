@@ -13,6 +13,7 @@ import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 
 const formSchema = z.object({
   value: z
@@ -22,6 +23,7 @@ const formSchema = z.object({
 });
 
 export const ProjectForm = () => {
+  const clerk = useClerk();
   const router = useRouter();
   const [isFocused, setIsFocused] = useState(false);
 
@@ -43,8 +45,11 @@ export const ProjectForm = () => {
         // TODO: invalidate usage status
       },
       onError: (error) => {
-        // TODO: Redirect to pricing page if specific error
         toast.error(error.message);
+
+        if (error.data?.code === "UNAUTHORIZED") {
+          router.push("/sign-in");
+        }
       },
     })
   );
@@ -63,7 +68,7 @@ export const ProjectForm = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
-          "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
+          "relative border p-4 pt-1 rounded-3xl bg-sidebar dark:bg-sidebar transition-all",
           isFocused && "shadow-xs"
         )}
       >
@@ -79,7 +84,7 @@ export const ProjectForm = () => {
               minRows={1}
               maxRows={8}
               className="pt-4 resize-none border-none w-full outline-none bg-transparent text-muted-foreground"
-              placeholder="What would you like to build?"
+              placeholder="Got a project in mind?"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
                   e.preventDefault();
